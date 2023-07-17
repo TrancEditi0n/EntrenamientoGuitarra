@@ -1,0 +1,11 @@
+# .git (carpeta del repositorio git)
+.git/
+
+# .idea (carpeta de configuración de IntelliJ IDEA)
+.idea/
+
+# __pycache__ (carpeta de archivos de caché de Python)
+__pycache__/
+
+# venv (carpeta de entorno virtual de Python)
+venv/

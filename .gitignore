@@ -9,3 +9,6 @@ __pycache__/
 
 # venv (carpeta de entorno virtual de Python)
 venv/
+
+#Saco este archivo porque es muy pesado para git
+assets/FluidR3_GM.sf2

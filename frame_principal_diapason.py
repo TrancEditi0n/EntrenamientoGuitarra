@@ -19,7 +19,7 @@ class FramePrincipalDiapason(ttk.Frame):
         self.numero_cuerdas = numero_cuerdas
         self.numero_trastes = numero_trastes
 
-        self.frame_inferior_diapason = FrameEjerciciosDiapason(self)
+        self.frame_inferior_diapason = None
         self.frame_superior_diapason = FrameDiapason(self, numero_cuerdas, numero_trastes)
         self.separador = SeparadorHorizontal(self)
 
@@ -28,7 +28,19 @@ class FramePrincipalDiapason(ttk.Frame):
 
         self.frame_superior_diapason.pack(fill='both', expand=True)
         self.separador.pack(side='top', fill='x', padx=5, pady=5)
+
+
+
+    def crear_frame_ejercicios_diapason_intervalos(self):
+
+        self.frame_inferior_diapason = FrameEjerciciosDiapason(self)
         self.frame_inferior_diapason.pack(fill='both', expand=True)
+
+        self.iniciar_ejercicio()
+
+    def eliminar_frame_ejercicios_diapason_intervalos(self):
+
+        self.frame_inferior_diapason.destroy()
 
     def iniciar_ejercicio(self):
 

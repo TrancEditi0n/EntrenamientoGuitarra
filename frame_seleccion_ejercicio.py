@@ -50,7 +50,7 @@ class FrameSeleccionEjercicio(ttk.Frame):
             self.combo_distancia_maxima_cuerdas.config(state="disabled")
             self.combo_distancia_maxima_trastes.config(state="disabled")
 
-            frame_principal.iniciar_ejercicio()
+            frame_principal.crear_frame_ejercicios_diapason_intervalos()
 
         else:
 
@@ -59,10 +59,7 @@ class FrameSeleccionEjercicio(ttk.Frame):
 
             # Deshabilito los botones de intervalos
 
-            botones_intervalos = frame_principal.frame_inferior_diapason.botones_intervalos
-
-            for boton in botones_intervalos:
-                boton.config(state="disabled")
+            frame_principal.eliminar_frame_ejercicios_diapason_intervalos()
 
             self.ejercicio_iniciado = False
             self.boton_identificar_intervalos.config(text="Identificar Intervalos")

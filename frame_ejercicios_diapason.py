@@ -46,6 +46,11 @@ class FrameEjerciciosDiapason(ttk.Frame):
             threading.Thread(target=self.reproducir_notas, args=(nota_1, nota_2), daemon=True).start()
             threading.Thread(target=self.restablecer_color_original, daemon=True).start()
             threading.Thread(target=self.mostrar_siguiente_intervalo, daemon=True).start()
+
+            #Deshabilito el botón para evitar que se clickee muchas veces
+
+            boton_intervalo.configure(state="disabled")
+
             self.respuestas_correctas += 1
             label_respuestas_correctas.configure(text="Respuestas correctas: " + str(self.respuestas_correctas))
 

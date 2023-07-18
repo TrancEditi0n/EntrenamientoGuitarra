@@ -16,6 +16,9 @@ class FramePrincipalDiapason(ttk.Frame):
         self.nota_1 = None
         self.nota_2 = None
 
+        # Esta va a ser la nota en el ejercicio "Identificar Notas"
+        self.nota = None
+
         self.numero_cuerdas = numero_cuerdas
         self.numero_trastes = numero_trastes
 
@@ -29,27 +32,33 @@ class FramePrincipalDiapason(ttk.Frame):
         self.frame_superior_diapason.pack(fill='both', expand=True)
         self.separador.pack(side='top', fill='x', padx=5, pady=5)
 
+    def crear_frame_ejercicios_diapason_notas(self):
 
+        self.frame_inferior_diapason = FrameEjerciciosDiapason(self, "notas")
+        self.frame_inferior_diapason.pack(fill='both', expand=True)
+
+        self.iniciar_ejercicio_notas()
 
     def crear_frame_ejercicios_diapason_intervalos(self):
 
-        self.frame_inferior_diapason = FrameEjerciciosDiapason(self)
+        self.frame_inferior_diapason = FrameEjerciciosDiapason(self, "intervalos")
         self.frame_inferior_diapason.pack(fill='both', expand=True)
 
-        self.iniciar_ejercicio()
+        self.iniciar_ejercicio_intervalos()
 
-    def eliminar_frame_ejercicios_diapason_intervalos(self):
+    def eliminar_frame_ejercicios_diapason(self):
 
         self.frame_inferior_diapason.destroy()
+        self.frame_superior_diapason.frame_canvas.canvas_diapason.borrar_notas()
 
-    def iniciar_ejercicio(self):
+    def iniciar_ejercicio_intervalos(self):
 
         self.distancia_maxima_cuerdas = int(self.frame_superior_diapason.frame_seleccion_ejercicio.combo_distancia_maxima_cuerdas.get())
         self.distancia_maxima_trastes = int(self.frame_superior_diapason.frame_seleccion_ejercicio.combo_distancia_maxima_trastes.get())
 
         # Activo los botones que me permiten elegir el intervalo
 
-        botones_intervalos = self.frame_inferior_diapason.botones_intervalos
+        botones_intervalos = self.frame_inferior_diapason.botones
 
         for boton in botones_intervalos:
             boton.config(state="active")
@@ -234,3 +243,20 @@ class FramePrincipalDiapason(ttk.Frame):
             matriz_notas.append(notas_cuerda)
 
         return matriz_notas
+
+    def iniciar_ejercicio_notas(self):
+
+        botones_notas = self.frame_inferior_diapason.botones
+
+        for boton in botones_notas:
+            boton.config(state="active")
+
+        traste_nota = random.randint(1, self.numero_trastes)
+        cuerda_nota = random.randint(1, self.numero_cuerdas)
+
+        # Borra las notas previas en el diapasón
+        self.frame_superior_diapason.frame_canvas.canvas_diapason.borrar_notas()
+
+        self.frame_superior_diapason.frame_canvas.canvas_diapason.marcar_nota(traste_nota, cuerda_nota, False)
+
+        self.nota = self.matriz_notas[cuerda_nota - 1][traste_nota - 1]

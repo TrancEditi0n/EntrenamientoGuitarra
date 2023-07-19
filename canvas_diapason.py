@@ -19,38 +19,6 @@ class CanvasDiapason(tk.Canvas):
 
         self.ajustar_tamano_ventana()
 
-    def dibujar_inlays(self, numero_trastes, numero_cuerdas):
-
-        inlay_trastes = [3, 5, 7, 9, 12, 15, 17, 19, 21, 24]  # Números de trastes donde se dibujarán los inlays
-
-        for traste in inlay_trastes:
-            if traste <= numero_trastes:
-                x = (traste + 0.5) * 50  # Calcula la coordenada x del centro del inlay
-                y = ((numero_cuerdas + 1) * 50) / 2  # Coordenada y fija para ubicar el inlay en
-                # el centro vertical del diapasón
-                radio = 10  # Tamaño del radio del inlay
-                fill_color = "#CCCCCC"
-                outline_color = fill_color
-
-                if traste in (12, 24):
-                    radio_1 = radio
-                    radio_2 = radio
-                    separacion = numero_cuerdas * 9  # Ajusta la separación entre los círculos
-                    # Por qué * 9? No hay por qué
-
-                    y1 = y - separacion - radio_1
-                    y2 = y + separacion + radio_2
-
-                    self.create_oval(x - radio_1, y1 - radio_1, x + radio_1, y1 + radio_1,
-                                     fill=fill_color, outline=outline_color)
-                    self.create_oval(x - radio_2, y2 - radio_2, x + radio_2, y2 + radio_2,
-                                     fill=fill_color, outline=outline_color)
-                else:
-                    self.create_oval(x - radio, y - radio, x + radio, y + radio,
-                                     fill=fill_color, outline=outline_color)
-            else:
-                break
-
     def marcar_nota(self, traste, cuerda, es_la_mas_grave):
         x = (traste + 0.5) * 50
         y = cuerda * 50
@@ -108,6 +76,38 @@ class CanvasDiapason(tk.Canvas):
         for i in range(0, numero_trastes + 2, 1):
             self.create_line(self.posicion_inicial + posicion_x, 50, self.posicion_inicial + posicion_x, numero_cuerdas * 50, width=2)
             posicion_x = self.escala - (self.escala / math.pow(2, i/12))
+
+    def dibujar_inlays(self, numero_trastes, numero_cuerdas):
+
+        inlay_trastes = [3, 5, 7, 9, 12, 15, 17, 19, 21, 24]  # Números de trastes donde se dibujarán los inlays
+
+        for traste in inlay_trastes:
+            if traste <= numero_trastes:
+                distancia_traste = self.escala - (self.escala / math.pow(2, traste / 12))
+                distancia_anterior_traste = self.escala - (self.escala / math.pow(2, (traste - 1) / 12))
+                x = self.posicion_inicial + (distancia_traste + distancia_anterior_traste) / 2
+                y = ((numero_cuerdas + 1) * 50) / 2  # Coordenada y fija para ubicar el inlay en el centro vertical del diapasón
+                radio = 10  # Tamaño del radio del inlay
+                fill_color = "#CCCCCC"
+                outline_color = fill_color
+
+                if traste in (12, 24):
+                    radio_1 = radio
+                    radio_2 = radio
+                    separacion = numero_cuerdas * 9  # Ajusta la separación vertical entre los círculos
+
+                    y1 = y - separacion - radio_1
+                    y2 = y + separacion + radio_2
+
+                    self.create_oval(x - radio_1, y1 - radio_1, x + radio_1, y1 + radio_1,
+                                     fill=fill_color, outline=outline_color)
+                    self.create_oval(x - radio_2, y2 - radio_2, x + radio_2, y2 + radio_2,
+                                     fill=fill_color, outline=outline_color)
+                else:
+                    self.create_oval(x - radio, y - radio, x + radio, y + radio,
+                                     fill=fill_color, outline=outline_color)
+            else:
+                break
 
     def ajustar_tamano_ventana(self):
         coordenadas = self.bbox("all")  # Obtener coordenadas del cuadro delimitador de todos los elementos dibujados

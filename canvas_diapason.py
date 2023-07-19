@@ -1,3 +1,4 @@
+import math
 import tkinter as tk
 
 
@@ -96,8 +97,15 @@ class CanvasDiapason(tk.Canvas):
 
     def dibujar_trastes(self, numero_trastes, numero_cuerdas):
 
-        for x in range(50, (numero_trastes + 1) * 50 + 1, 50):
-            self.create_line(x, 50, x, numero_cuerdas * 50, width=2)
+        # L_n = L - (L / 2^(n/12)) -> Fórmula para calcular la distancia de los trastes en una guitarra real
+
+        escala = 2400
+        posicion_inicial = 50
+        posicion_x = 0
+
+        for i in range(0, numero_trastes + 2, 1):
+            self.create_line(posicion_inicial + posicion_x, 50, posicion_inicial + posicion_x, numero_cuerdas * 50, width=2)
+            posicion_x = escala - (escala / math.pow(2, i/12))
 
     def ajustar_tamano_ventana(self):
         coordenadas = self.bbox("all")  # Obtener coordenadas del cuadro delimitador de todos los elementos dibujados

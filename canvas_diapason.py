@@ -6,6 +6,8 @@ class CanvasDiapason(tk.Canvas):
     def __init__(self, master, numero_cuerdas, numero_trastes):
         super().__init__(master)
 
+        self.escala = 2400
+        self.posicion_inicial = 50
         self.notas_marcadas = []
         self.r_que_aparece_en_la_nota_mas_grave = None
 
@@ -81,6 +83,8 @@ class CanvasDiapason(tk.Canvas):
 
     def dibujar_cuerdas(self, numero_trastes, numero_cuerdas):
 
+        largo_de_cuerda = self.posicion_inicial + (self.escala - (self.escala / math.pow(2, numero_trastes/12))) + 1
+
         grosor_maximo = 5
         grosor_minimo = 2
 
@@ -93,19 +97,17 @@ class CanvasDiapason(tk.Canvas):
         # Dibuja las cuerdas del diapasón
         for i, y in enumerate(range(50, (numero_cuerdas + 1) * 50, 50)):
             grosor_cuerda = grosor_minimo + (i * incremento_grosor)
-            self.create_line(49, y, (numero_trastes + 1) * 50 + 1, y, width=grosor_cuerda)
+            self.create_line(self.posicion_inicial - 1, y, largo_de_cuerda, y, width=grosor_cuerda)
 
     def dibujar_trastes(self, numero_trastes, numero_cuerdas):
 
         # L_n = L - (L / 2^(n/12)) -> Fórmula para calcular la distancia de los trastes en una guitarra real
 
-        escala = 2400
-        posicion_inicial = 50
         posicion_x = 0
 
         for i in range(0, numero_trastes + 2, 1):
-            self.create_line(posicion_inicial + posicion_x, 50, posicion_inicial + posicion_x, numero_cuerdas * 50, width=2)
-            posicion_x = escala - (escala / math.pow(2, i/12))
+            self.create_line(self.posicion_inicial + posicion_x, 50, self.posicion_inicial + posicion_x, numero_cuerdas * 50, width=2)
+            posicion_x = self.escala - (self.escala / math.pow(2, i/12))
 
     def ajustar_tamano_ventana(self):
         coordenadas = self.bbox("all")  # Obtener coordenadas del cuadro delimitador de todos los elementos dibujados

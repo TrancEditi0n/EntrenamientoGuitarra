@@ -20,19 +20,21 @@ class CanvasDiapason(tk.Canvas):
         self.ajustar_tamano_ventana()
 
     def marcar_nota(self, traste, cuerda, es_la_mas_grave):
-        x = (traste + 0.5) * 50
+        distancia_traste = self.escala - (self.escala / math.pow(2, traste / 12))
+        distancia_anterior_traste = self.escala - (self.escala / math.pow(2, (traste - 1) / 12))
+        x = self.posicion_inicial + (distancia_traste + distancia_anterior_traste) / 2
         y = cuerda * 50
         radio = 15
         fill_color = "red"
         outline_color = "red"
         nota = self.create_oval(x - radio, y - radio, x + radio, y + radio,
-                         fill=fill_color, outline=outline_color)
+                                fill=fill_color, outline=outline_color)
 
         if es_la_mas_grave:
-
             # Agrega la letra "R" dentro del óvalo
             texto = "R"
-            self.r_que_aparece_en_la_nota_mas_grave = self.create_text(x, y, text=texto, fill="white", font=("Arial", 12), tag=nota)
+            self.r_que_aparece_en_la_nota_mas_grave = self.create_text(x, y, text=texto, fill="white",
+                                                                       font=("Arial", 12), tag=nota)
 
         self.notas_marcadas.append(nota)
 

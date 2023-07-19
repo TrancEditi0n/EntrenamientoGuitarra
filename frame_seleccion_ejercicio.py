@@ -39,30 +39,56 @@ class FrameSeleccionEjercicio(ttk.Frame):
         self.label_respuestas_incorrectas.pack()
         self.label_porcentaje_respuestas_correctas.pack()
 
-    def boton_identificar_intervalos_clicked(self):
+        self.boton_identificar_notas = Boton(self, "Identificar Notas",
+                                             self.boton_identificar_notas_clicked)
+        self.boton_identificar_notas.pack()
 
+    def boton_identificar_notas_clicked(self):
+        frame_principal = self.master.master
+
+        if not self.ejercicio_iniciado:
+            self.ejercicio_iniciado = True
+            self.boton_identificar_notas.config(text="Finalizar")
+            self.boton_identificar_intervalos.config(state="disabled")
+            self.deshabilitar_combos_itervalos()
+            frame_principal.crear_frame_ejercicios_diapason_notas()
+
+        else:
+            frame_principal.eliminar_frame_ejercicios_diapason()
+
+            self.ejercicio_iniciado = False
+            self.boton_identificar_notas.config(text="Identificar Notas")
+            self.boton_identificar_intervalos.config(state="enabled")
+            self.habilitar_combos_itervalos()
+
+
+    def boton_identificar_intervalos_clicked(self):
         frame_principal = self.master.master  # Obtener la instancia de FramePrincipalDiapason
 
         if not self.ejercicio_iniciado:
             self.ejercicio_iniciado = True
             self.boton_identificar_intervalos.config(text="Finalizar")
+            self.boton_identificar_notas.config(state="disabled")
+            self.deshabilitar_combos_itervalos()
 
-            self.combo_distancia_maxima_cuerdas.config(state="disabled")
-            self.combo_distancia_maxima_trastes.config(state="disabled")
-
-            frame_principal.iniciar_ejercicio()
+            frame_principal.crear_frame_ejercicios_diapason_intervalos()
 
         else:
 
-            self.combo_distancia_maxima_cuerdas.config(state="readonly")
-            self.combo_distancia_maxima_trastes.config(state="readonly")
+            self.habilitar_combos_itervalos()
+            self.boton_identificar_notas.config(state="enabled")
 
-            # Deshabilito los botones de intervalos
-
-            botones_intervalos = frame_principal.frame_inferior_diapason.botones_intervalos
-
-            for boton in botones_intervalos:
-                boton.config(state="disabled")
+            frame_principal.eliminar_frame_ejercicios_diapason()
 
             self.ejercicio_iniciado = False
             self.boton_identificar_intervalos.config(text="Identificar Intervalos")
+
+    def deshabilitar_combos_itervalos(self):
+
+        self.combo_distancia_maxima_cuerdas.config(state="disabled")
+        self.combo_distancia_maxima_trastes.config(state="disabled")
+
+    def habilitar_combos_itervalos(self):
+
+        self.combo_distancia_maxima_cuerdas.config(state="readonly")
+        self.combo_distancia_maxima_trastes.config(state="readonly")

@@ -59,6 +59,5 @@ class SubFrameSuperior(ttk.Frame):
             VentanaDiapason(self, numero_cuerdas, numero_trastes, self.afinacion_estandar)
         elif self.opcion_afinacion_elegida.get() == "AP":
             ventana_seleccion_afinacion = VentanaSeleccionAfinacion(self, numero_cuerdas)
-            print(self.afinacion_personalizada)
             self.wait_window(ventana_seleccion_afinacion)
             VentanaDiapason(self, numero_cuerdas, numero_trastes, self.afinacion_personalizada)

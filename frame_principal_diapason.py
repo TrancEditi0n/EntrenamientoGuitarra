@@ -23,7 +23,7 @@ class FramePrincipalDiapason(ttk.Frame):
         self.numero_trastes = numero_trastes
 
         self.frame_inferior_diapason = None
-        self.frame_superior_diapason = FrameDiapason(self, numero_cuerdas, numero_trastes)
+        self.frame_superior_diapason = FrameDiapason(self, numero_cuerdas, numero_trastes, afinacion)
         self.separador = SeparadorHorizontal(self)
 
         self.distancia_maxima_cuerdas = None

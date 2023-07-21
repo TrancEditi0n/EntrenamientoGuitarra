@@ -3,19 +3,24 @@ import tkinter as tk
 
 
 class CanvasDiapason(tk.Canvas):
-    def __init__(self, master, numero_cuerdas, numero_trastes):
+    def __init__(self, master, numero_cuerdas, numero_trastes, afinacion):
         super().__init__(master)
 
         self.escala = 2400
         self.posicion_inicial = 50
         self.notas_marcadas = []
         self.r_que_aparece_en_la_nota_mas_grave = None
+        self.notas_al_aire = []
+
+        for tupla in afinacion:
+            self.notas_al_aire.append(tupla[0])
 
         # Dibuja los inlays primero para que no aparezcan por encima de las cuerdas
 
         self.dibujar_inlays(numero_trastes, numero_cuerdas)
         self.dibujar_cuerdas(numero_trastes, numero_cuerdas)
         self.dibujar_trastes(numero_trastes, numero_cuerdas)
+        self.dibujar_notas_al_aire(numero_cuerdas)
 
         self.ajustar_tamano_ventana()
 
@@ -110,6 +115,13 @@ class CanvasDiapason(tk.Canvas):
                                      fill=fill_color, outline=outline_color)
             else:
                 break
+
+    def dibujar_notas_al_aire(self, numero_cuerdas):
+        # Dibuja el nombre de la nota al aire a la izquierda de cada cuerda
+        for i, y in enumerate(range(50, (numero_cuerdas + 1) * 50, 50)):
+            x = 25  # Posición fija para el texto a la izquierda de las cuerdas
+            nota = self.notas_al_aire[i]
+            self.create_text(x, y, text=nota, fill="white", font=("Arial", 20, "bold"))
 
     def ajustar_tamano_ventana(self):
         coordenadas = self.bbox("all")  # Obtener coordenadas del cuadro delimitador de todos los elementos dibujados

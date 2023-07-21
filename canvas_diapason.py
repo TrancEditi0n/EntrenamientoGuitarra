@@ -67,7 +67,7 @@ class CanvasDiapason(tk.Canvas):
         # Dibuja las cuerdas del diapasón
         for i, y in enumerate(range(50, (numero_cuerdas + 1) * 50, 50)):
             grosor_cuerda = grosor_minimo + (i * incremento_grosor)
-            self.create_line(self.posicion_inicial - 1, y, largo_de_cuerda, y, width=grosor_cuerda)
+            self.create_line(self.posicion_inicial - 1, y, largo_de_cuerda, y, width=grosor_cuerda, fill="azure4")
 
     def dibujar_trastes(self, numero_trastes, numero_cuerdas):
 
@@ -76,7 +76,7 @@ class CanvasDiapason(tk.Canvas):
         posicion_x = 0
 
         for i in range(0, numero_trastes + 2, 1):
-            self.create_line(self.posicion_inicial + posicion_x, 50, self.posicion_inicial + posicion_x, numero_cuerdas * 50, width=2)
+            self.create_line(self.posicion_inicial + posicion_x, 50, self.posicion_inicial + posicion_x, numero_cuerdas * 50, width=2, fill="azure4")
             posicion_x = self.escala - (self.escala / math.pow(2, i/12))
 
     def dibujar_inlays(self, numero_trastes, numero_cuerdas):
@@ -90,7 +90,7 @@ class CanvasDiapason(tk.Canvas):
                 x = self.posicion_inicial + (distancia_traste + distancia_anterior_traste) / 2
                 y = ((numero_cuerdas + 1) * 50) / 2  # Coordenada y fija para ubicar el inlay en el centro vertical del diapasón
                 radio = 10  # Tamaño del radio del inlay
-                fill_color = "#CCCCCC"
+                fill_color = "#55556B"
                 outline_color = fill_color
 
                 if traste in (12, 24):

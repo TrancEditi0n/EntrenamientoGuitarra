@@ -28,7 +28,7 @@ class FrameEjerciciosDiapason(ttk.Frame):
                 opciones = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"]
 
         for opcion in opciones:
-            boton = tk.Button(self, text=opcion, font=("Arial", 12), state="disabled")
+            boton = tk.Button(self, text=opcion, font=("Arial", 12), state="disabled", activebackground="#313131")
             boton.config(command=lambda boton=boton: self.verificar_opcion(boton))
             self.botones.append(boton)
             boton.pack(side="left", expand=True, fill="both")
@@ -85,7 +85,7 @@ class FrameEjerciciosDiapason(ttk.Frame):
         time.sleep(1)
 
         for boton in self.botones:
-            boton.configure(bg="SystemButtonFace", activebackground="SystemButtonFace", fg="SystemButtonText")
+            boton.configure(bg="#313131", activebackground="#313131")
 
     def mostrar_siguiente_intervalo(self):
         time.sleep(1)

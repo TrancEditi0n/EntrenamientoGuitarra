@@ -61,7 +61,7 @@ class FramePrincipalDiapason(ttk.Frame):
         botones_intervalos = self.frame_inferior_diapason.botones
 
         for boton in botones_intervalos:
-            boton.config(state="active")
+            boton.config(state="normal")
 
         # Generar números aleatorios para la cuerda y traste de la primera nota
 
@@ -249,7 +249,7 @@ class FramePrincipalDiapason(ttk.Frame):
         botones_notas = self.frame_inferior_diapason.botones
 
         for boton in botones_notas:
-            boton.config(state="active")
+            boton.config(state="normal")
 
         traste_nota = random.randint(1, self.numero_trastes)
         cuerda_nota = random.randint(1, self.numero_cuerdas)
